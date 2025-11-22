@@ -72,6 +72,7 @@ CREATE TABLE t_factura(
     id_cliente      INT(11),
     id_producto     INT(11),
     id_usuario      INT(11),
+    total           FLOAT(10,2),
     CONSTRAINT pk_factura PRIMARY KEY(id_factura),
     CONSTRAINT fk_cliente FOREIGN KEY(id_cliente) REFERENCES t_cliente(id_cliente),
     CONSTRAINT fk_producto FOREIGN KEY(id_producto) REFERENCES t_producto(id_producto),
@@ -90,10 +91,10 @@ SELECT FAC.id_factura,
         CLI.direccion,
         CLI.nombre_cliente,
         PRO.producto,
-        PRO.valor_unitario
+        PRO.valor_unitario,
+        FAC.cantidad * PRO.valor_unitario AS total
 
 FROM t_factura FAC
 INNER JOIN t_usuario USU ON USU.id_usuario = FAC.id_usuario
 INNER JOIN t_cliente CLI ON CLI.id_cliente = FAC.id_cliente
-INNER JOIN t_producto PRO ON PRO.id_producto = PRO.id_producto
 INNER JOIN t_producto PRO ON PRO.id_producto = PRO.id_producto
